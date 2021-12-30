@@ -1,0 +1,3 @@
+interface TableHeader {
+  headers: string[]
+}
