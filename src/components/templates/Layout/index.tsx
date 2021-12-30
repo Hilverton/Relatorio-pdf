@@ -3,15 +3,15 @@ import LogoAD from '../../../../assets/logo_ad.png'
 
 const Layout: FC = ({ children }) => {
   return (
-    <main className="min-h-screen max-w-7xl mx-auto py-10 md:py-0 flex flex-col justify-center items-center">
+    <main className="min-h-screen max-w-6xl mx-auto py-8 md:py-0 flex flex-col justify-center items-center">
       <section>
         <img
-          className="w-auto h-16 md:h-32 mb-24"
+          className="w-auto h-16 md:h-24 mb-16"
           src={LogoAD}
           alt="Logo da igreja"
         />
       </section>
-      <section>{children}</section>
+      {children}
     </main>
   )
 }

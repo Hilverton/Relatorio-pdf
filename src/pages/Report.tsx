@@ -2,12 +2,12 @@ import Layout from '../components/templates/Layout'
 import DateInput from '../components/atoms/DateInput'
 import DataList from '../components/atoms/DataList'
 
-const months = ["Janeiro", "Fevereiro", "Março"]
+const months = ['Janeiro', 'Fevereiro', 'Março']
 
 export default function Report() {
 	return (
 		<Layout>
-			<div className="flex flex-col text-white h-auto space-y-16">
+			<div className="flex flex-col text-white h-auto space-y-16 w-full">
 				<h1 className="text-5xl text-center">Produção do Relatório</h1>
 				<section className="flex-col space-y-4">
 					<h2 className="text-4xl">Informações do documento</h2>
