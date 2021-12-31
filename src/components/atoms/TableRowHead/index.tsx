@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 interface ITableRowHead {
   isHeader?: boolean
-  isEven: boolean
+  isEven?: boolean
 }
 
 const TableRowHead: FC<ITableRowHead> = ({

@@ -28,12 +28,12 @@ export default function Report() {
           <h2 className="text-4xl">Informações do documento</h2>
           <div>
             <Table
-              headers={['Código', 'Nome', 'Valor', 'Ações']}
+              headers={['Código', 'Nome', 'Valor']}
               datas={[
-                ['123', 'José', '2000', 'Ação'],
-                ['153', 'José', '900', 'Ação'],
-                ['456', 'João', '2500', 'Ação'],
-                ['136', 'Carlos', '2750', 'Ação'],
+                ['123', 'José', '2000'],
+                ['153', 'José', '900'],
+                ['456', 'João', '2500'],
+                ['136', 'Carlos', '2750'],
               ]}
             />
           </div>
