@@ -9,7 +9,7 @@ export default function Home() {
         <Navigation
           icon="bi bi-file-earmark-pdf"
           title="Gerar relatório"
-          link=""
+          link="/report"
         />
       </div>
     </Layout>

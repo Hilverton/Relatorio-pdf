@@ -1,5 +1,5 @@
-import Report from './pages/Report'
+import AppRoutes from './routes'
 
 export function App() {
-  return <Report />
+  return <AppRoutes />
 }
