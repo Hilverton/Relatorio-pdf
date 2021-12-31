@@ -27,7 +27,15 @@ export default function Report() {
         <section className="flex-col space-y-4">
           <h2 className="text-4xl">Informações do documento</h2>
           <div>
-            <Table headers={['Código', 'Nome', 'Valor', 'Ações']} />
+            <Table
+              headers={['Código', 'Nome', 'Valor', 'Ações']}
+              datas={[
+                ['123', 'José', '2000', 'Ação'],
+                ['153', 'José', '900', 'Ação'],
+                ['456', 'João', '2500', 'Ação'],
+                ['136', 'Carlos', '2750', 'Ação'],
+              ]}
+            />
           </div>
         </section>
       </div>
