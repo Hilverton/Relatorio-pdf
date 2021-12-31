@@ -1,7 +1,7 @@
 import Layout from '../components/templates/Layout'
-import PageTitle from '../components/atoms/PageTitle'
 import SectionTitle from '../components/atoms/SectionTitle'
 import Input from '../components/atoms/Input'
+import HeaderPage from '../components/molecules/HeaderPage'
 import DataList from '../components/atoms/DataList'
 import Table from '../components/organisms/Table'
 
@@ -11,7 +11,7 @@ export default function Report() {
   return (
     <Layout>
       <div className="flex flex-col text-white h-auto space-y-16 w-full">
-        <PageTitle>Produção do Relatório</PageTitle>
+        <HeaderPage title="Produção do Relatório" />
         <section className="flex-col space-y-4">
           <SectionTitle>Informações do documento</SectionTitle>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
