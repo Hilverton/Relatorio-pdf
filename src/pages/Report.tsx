@@ -1,5 +1,8 @@
+import { useHistory } from 'react-router-dom'
+
 import Layout from '../components/templates/Layout'
 import SectionTitle from '../components/atoms/SectionTitle'
+import Button from '../components/atoms/Button'
 import Input from '../components/atoms/Input'
 import HeaderPage from '../components/molecules/HeaderPage'
 import DataList from '../components/atoms/DataList'
@@ -8,6 +11,10 @@ import TableWithAddition from '../components/organisms/TableWithAddition'
 const months = ['Janeiro', 'Fevereiro', 'Março']
 
 export default function Report() {
+  const history = useHistory()
+
+  const handleGoBack = () => history.replace('/')
+
   return (
     <Layout>
       <div className="flex flex-col text-white h-auto space-y-16 w-full">
@@ -23,6 +30,12 @@ export default function Report() {
         <section className="flex-col space-y-4">
           <SectionTitle>Informações do documento</SectionTitle>
           <TableWithAddition />
+        </section>
+        <section className="flex justify-end space-x-2 mt-4">
+          <Button hasOutline bgColor="delete" onClick={handleGoBack}>
+            Voltar
+          </Button>
+          <Button bgColor="success">Gerar Arquivo</Button>
         </section>
       </div>
     </Layout>
