@@ -3,7 +3,7 @@ import SectionTitle from '../components/atoms/SectionTitle'
 import Input from '../components/atoms/Input'
 import HeaderPage from '../components/molecules/HeaderPage'
 import DataList from '../components/atoms/DataList'
-import Table from '../components/organisms/Table'
+import TableWithAddition from '../components/organisms/TableWithAddition'
 
 const months = ['Janeiro', 'Fevereiro', 'Março']
 
@@ -22,17 +22,7 @@ export default function Report() {
         </section>
         <section className="flex-col space-y-4">
           <SectionTitle>Informações do documento</SectionTitle>
-          <div>
-            <Table
-              headers={['Código', 'Nome', 'Valor']}
-              datas={[
-                ['123', 'José', '2000'],
-                ['153', 'José', '900'],
-                ['456', 'João', '2500'],
-                ['136', 'Carlos', '2750'],
-              ]}
-            />
-          </div>
+          <TableWithAddition />
         </section>
       </div>
     </Layout>
