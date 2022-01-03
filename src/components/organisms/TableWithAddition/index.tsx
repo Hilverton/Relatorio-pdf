@@ -19,12 +19,12 @@ const TableWithAddition = () => {
     <div className="rounded-md overflow-hidden w-full">
       <AddItemTable list={list} />
       <Table
-        headers={['Código', 'Nome', 'Valor']}
+        headers={['Código', 'Nome', 'Valor', 'Ação']}
         datas={[
-          ['123', 'José', '2000'],
-          ['153', 'José', '900'],
-          ['456', 'João', '2500'],
-          ['136', 'Carlos', '2750'],
+          ['123', 'José'],
+          ['153', 'José'],
+          ['456', 'João'],
+          ['136', 'Carlos'],
         ]}
       />
     </div>

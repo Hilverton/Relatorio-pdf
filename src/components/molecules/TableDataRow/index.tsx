@@ -1,18 +1,53 @@
 import TableRowHead from '../../atoms/TableRowHead'
 import TableData from '../../atoms/TableData'
 import Button from '../../atoms/Button'
+import Input from '../../atoms/Input'
 
 export default function TableDataRow({ headers, datas, idx }: TableDataRow) {
-  console.log('isEven', idx % 2 === 0)
-  const totalItems = datas.length - 1
-  let currentIndex = 0
-  console.log('currentIndex', currentIndex)
   return (
     <TableRowHead isEven={idx % 2 === 0}>
       {headers.map((header, index) => {
-        currentIndex = index
+        if (header === 'Valor') {
+          return (
+            <TableData key={index} width="w-full md:w-52">
+              <div className="flex">
+                <span className="inline-block w-1/3 md:hidden font-bold">
+                  Valor
+                </span>
+                <Input name="input_value" type="text" label="" />
+              </div>
+            </TableData>
+          )
+        }
+
+        if (header === 'Ações') {
+          return (
+            <TableData key={index} width="w-full md:w-52">
+              <span className="inline-block w-1/3 md:hidden font-bold">
+                Ações
+              </span>
+              <Button bgColor="edit">Editar</Button>
+              <Button bgColor="delete">Apagar</Button>
+            </TableData>
+          )
+        }
+
+        if (header === 'Ação') {
+          return (
+            <TableData key={index} width="w-full md:w-52">
+              <span className="inline-block w-1/3 md:hidden font-bold">
+                Ação
+              </span>
+              <Button bgColor="delete">Apagar</Button>
+            </TableData>
+          )
+        }
+
         return (
-          <TableData width={index % 2 === 0 ? 'w-full md:w-52' : ''}>
+          <TableData
+            key={index}
+            width={index % 2 === 0 ? 'w-full md:w-52' : ''}
+          >
             <span className="inline-block w-1/3 md:hidden font-bold">
               {header}
             </span>
@@ -20,13 +55,6 @@ export default function TableDataRow({ headers, datas, idx }: TableDataRow) {
           </TableData>
         )
       })}
-      {currentIndex === totalItems && (
-        <TableData width="w-full md:w-52">
-          <span className="inline-block w-1/3 md:hidden font-bold">Ações</span>
-          <Button bgColor="edit">Editar</Button>
-          <Button bgColor="delete">Apagar</Button>
-        </TableData>
-      )}
     </TableRowHead>
   )
 }
