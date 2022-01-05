@@ -1,32 +1,34 @@
+import { FC } from 'react'
 import AddItemTable from '../../molecules/AddItemTable'
 import Table from '../Table'
 
-const list = [
-  {
-    id: 1,
-    code: '123',
-    name: 'Jóse Carlos',
-  },
-  {
-    id: 2,
-    code: '9845',
-    name: 'João Vitor',
-  },
-]
+interface IList {
+  id: number
+  code: string
+  name: string
+}
 
-const TableWithAddition = () => {
+interface ITableWithAddition {
+  memberList: IList[]
+  headers: string[]
+  datas: string[][]
+  getDataItem: (data: string[]) => void
+}
+
+const TableWithAddition: FC<ITableWithAddition> = ({
+  memberList,
+  headers,
+  datas,
+  getDataItem,
+}) => {
+  function getDataAddItemTable(data: string[]) {
+    getDataItem(data)
+  }
+
   return (
     <div className="rounded-md overflow-hidden w-full">
-      <AddItemTable list={list} />
-      <Table
-        headers={['Código', 'Nome', 'Valor', 'Ação']}
-        datas={[
-          ['123', 'José'],
-          ['153', 'José'],
-          ['456', 'João'],
-          ['136', 'Carlos'],
-        ]}
-      />
+      <AddItemTable getDatas={getDataAddItemTable} list={memberList} />
+      <Table headers={headers} datas={datas} />
     </div>
   )
 }

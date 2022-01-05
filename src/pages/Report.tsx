@@ -15,13 +15,30 @@ interface DataPage {
   month: string
   starting_day: string
   final_day: string
+  rowList: string[][]
 }
 
 const INITIAL_DATA = {
   month: '',
   starting_day: '',
   final_day: '',
+  rowList: [],
 }
+
+const headers = ['Código', 'Nome', 'Valor', 'Ação']
+
+const list = [
+  {
+    id: 1,
+    code: '123',
+    name: 'Jóse Carlos',
+  },
+  {
+    id: 2,
+    code: '9845',
+    name: 'João Vitor',
+  },
+]
 
 export default function Report() {
   const history = useHistory()
@@ -35,6 +52,11 @@ export default function Report() {
 
   function getData() {
     console.log('infos', infos)
+  }
+
+  function getNewItem(data: string[]) {
+    console.log('report new item', data)
+    setInfos({ ...infos, rowList: [...infos.rowList, data] })
   }
 
   return (
@@ -69,7 +91,12 @@ export default function Report() {
         </section>
         <section className="flex-col space-y-4">
           <SectionTitle>Informações do documento</SectionTitle>
-          <TableWithAddition />
+          <TableWithAddition
+            headers={headers}
+            datas={infos.rowList}
+            memberList={list}
+            getDataItem={getNewItem}
+          />
         </section>
         <section className="flex justify-end space-x-2 mt-4">
           <Button hasOutline bgColor="delete" onClick={handleGoBack}>
