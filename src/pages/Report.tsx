@@ -1,5 +1,7 @@
-import { useState, ChangeEvent } from 'react'
+import { useState, useContext, ChangeEvent } from 'react'
 import { useHistory } from 'react-router-dom'
+
+import DataContext from '../context'
 
 import Layout from '../components/templates/Layout'
 import SectionTitle from '../components/atoms/SectionTitle'
@@ -25,23 +27,34 @@ const INITIAL_DATA = {
   rowList: [],
 }
 
-const headers = ['Código', 'Nome', 'Valor', 'Ação']
+const headers = ['Código', 'Nome', 'Valor', 'Ações']
 
 const list = [
   {
     id: 1,
-    code: '123',
+    code: '1236563',
     name: 'Jóse Carlos',
   },
   {
     id: 2,
-    code: '9845',
+    code: '9845986',
     name: 'João Vitor',
+  },
+  {
+    id: 3,
+    code: '7419845',
+    name: 'Nicodemos Vitor',
+  },
+  {
+    id: 4,
+    code: '7419845',
+    name: 'Antônio Gilberto',
   },
 ]
 
 export default function Report() {
   const history = useHistory()
+  const { codeSelected } = useContext(DataContext)
   const [infos, setInfos] = useState<DataPage>(INITIAL_DATA)
 
   const handleGoBack = () => history.replace('/')

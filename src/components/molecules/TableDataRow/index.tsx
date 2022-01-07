@@ -1,8 +1,12 @@
+import { useContext } from 'react'
+import DataContext from '../../../context'
+
 import TableRowHead from '../../atoms/TableRowHead'
 import TableData from '../../atoms/TableData'
 import Button from '../../atoms/Button'
 
 export default function TableDataRow({ headers, datas, idx }: TableDataRow) {
+  const { getItemByCode } = useContext(DataContext)
   return (
     <TableRowHead isEven={idx % 2 === 0}>
       {headers.map((header, index) => {
@@ -12,8 +16,12 @@ export default function TableDataRow({ headers, datas, idx }: TableDataRow) {
               <span className="inline-block w-1/3 md:hidden font-bold">
                 Ações
               </span>
-              <Button bgColor="edit">Editar</Button>
-              <Button bgColor="delete">Apagar</Button>
+              <Button bgColor="edit" onClick={() => getItemByCode(datas[0])}>
+                Editar
+              </Button>
+              <Button bgColor="delete" onClick={() => getItemByCode(datas[0])}>
+                Apagar
+              </Button>
             </TableData>
           )
         }

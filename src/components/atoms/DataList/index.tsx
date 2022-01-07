@@ -27,7 +27,7 @@ export default function DataList({
       />
       <datalist id={`list-${name}`}>
         {dataList.map(item => (
-          <option value={item} />
+          <option key={item} value={item} />
         ))}
       </datalist>
     </div>
