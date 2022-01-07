@@ -17,14 +17,12 @@ interface DataPage {
   month: string
   starting_day: string
   final_day: string
-  rowList: string[][]
 }
 
 const INITIAL_DATA = {
   month: '',
   starting_day: '',
   final_day: '',
-  rowList: [],
 }
 
 const headers = ['Código', 'Nome', 'Valor', 'Ações']
@@ -47,14 +45,14 @@ const list = [
   },
   {
     id: 4,
-    code: '7419845',
+    code: '7419145',
     name: 'Antônio Gilberto',
   },
 ]
 
 export default function Report() {
   const history = useHistory()
-  const { codeSelected } = useContext(DataContext)
+  const { listWithValue, setListWithValue } = useContext(DataContext)
   const [infos, setInfos] = useState<DataPage>(INITIAL_DATA)
 
   const handleGoBack = () => history.replace('/')
@@ -65,11 +63,11 @@ export default function Report() {
 
   function getData() {
     console.log('infos', infos)
+    console.log('listWithValue', listWithValue)
   }
 
   function getNewItem(data: string[]) {
-    console.log('report new item', data)
-    setInfos({ ...infos, rowList: [...infos.rowList, data] })
+    setListWithValue([...listWithValue, data])
   }
 
   return (
@@ -106,7 +104,7 @@ export default function Report() {
           <SectionTitle>Informações do documento</SectionTitle>
           <TableWithAddition
             headers={headers}
-            datas={infos.rowList}
+            datas={listWithValue}
             memberList={list}
             getDataItem={getNewItem}
           />
