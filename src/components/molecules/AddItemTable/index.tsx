@@ -5,6 +5,8 @@ import DataList from '../../atoms/DataList'
 import Button from '../../atoms/Button'
 import Input from '../../atoms/Input'
 
+import currency from '../../../utils/currency'
+
 interface IList {
   id: number
   code: string
@@ -41,7 +43,10 @@ export default function AddInTable({ list, getDatas }: IAddInTable) {
   }
 
   return (
-    <form className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 p-2 bg-white w-full">
+    <form
+      onSubmit={getDataInputs}
+      className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 p-2 bg-white w-full"
+    >
       <DataList
         name="search_member"
         label=""
@@ -49,6 +54,7 @@ export default function AddInTable({ list, getDatas }: IAddInTable) {
         dataList={memberList}
         value={member}
         onChange={event => setMember(event.target.value)}
+        required
       />
       <Input
         name="value"
@@ -56,9 +62,10 @@ export default function AddInTable({ list, getDatas }: IAddInTable) {
         type="text"
         placeholder="R$ 0,00"
         value={value}
-        onChange={event => setValue(event.target.value)}
+        onChange={event => setValue(currency(event.target.value))}
+        required
       />
-      <Button type="submit" bgColor="edit" onClick={getDataInputs}>
+      <Button type="submit" bgColor="edit">
         Adicionar
       </Button>
     </form>
