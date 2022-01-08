@@ -52,7 +52,12 @@ const list = [
 
 export default function Report() {
   const history = useHistory()
-  const { listWithValue, setListWithValue } = useContext(DataContext)
+  const {
+    listWithValue,
+    setListWithValue,
+    editItemWithValue,
+    setEditItemWithValue,
+  } = useContext(DataContext)
   const [infos, setInfos] = useState<DataPage>(INITIAL_DATA)
 
   const handleGoBack = () => history.replace('/')
@@ -67,7 +72,15 @@ export default function Report() {
   }
 
   function getNewItem(data: string[]) {
-    setListWithValue([...listWithValue, data])
+    if (editItemWithValue.index !== -1) {
+      const newList = listWithValue
+      newList.splice(editItemWithValue.index, 1, data)
+      console.log('newList', newList)
+      setListWithValue(newList)
+      setEditItemWithValue({ member: '', value: '', index: -1 })
+    } else {
+      setListWithValue([...listWithValue, data])
+    }
   }
 
   return (

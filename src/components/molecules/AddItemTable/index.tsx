@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import DataContext from '../../../context'
+
 import DataList from '../../atoms/DataList'
 import Button from '../../atoms/Button'
 import Input from '../../atoms/Input'
@@ -18,11 +20,17 @@ export default function AddInTable({ list, getDatas }: IAddInTable) {
   const [memberList, setMemberList] = useState<string[]>([])
   const [member, setMember] = useState('')
   const [value, setValue] = useState('')
+  const { editItemWithValue } = useContext(DataContext)
 
   useEffect(() => {
     const mapList = list.map(item => `${item.code} - ${item.name}`)
     setMemberList(mapList)
   }, [])
+
+  useEffect(() => {
+    setMember(editItemWithValue.member)
+    setValue(editItemWithValue.value)
+  }, [editItemWithValue])
 
   function getDataInputs() {
     const data = member.split(' - ')
