@@ -7,7 +7,7 @@ export default function TableBody({
   return (
     <tbody className="block md:table-row-group text-gray-900">
       {datas.map((data, index) => (
-        <TableDataRow idx={index} headers={headers} datas={data} />
+        <TableDataRow key={index} idx={index} headers={headers} datas={data} />
       ))}
     </tbody>
   )

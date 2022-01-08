@@ -6,10 +6,17 @@ export default function TableHeaderRow({ headers }: TableHeader) {
     <TableRowHead isHeader>
       {headers.map((header, index) => {
         if (header === 'Ações' || header === 'Ação') {
-          return <TableHeader width="w-full md:w-52">{header}</TableHeader>
+          return (
+            <TableHeader key={header} width="w-full md:w-52">
+              {header}
+            </TableHeader>
+          )
         }
         return (
-          <TableHeader width={index % 2 === 0 ? 'w-full md:w-52' : ''}>
+          <TableHeader
+            key={header}
+            width={index % 2 === 0 ? 'w-full md:w-52' : ''}
+          >
             {header}
           </TableHeader>
         )
