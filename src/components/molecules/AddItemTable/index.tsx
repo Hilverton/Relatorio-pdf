@@ -41,7 +41,7 @@ export default function AddInTable({ list, getDatas }: IAddInTable) {
   }
 
   return (
-    <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 p-2 bg-white w-full">
+    <form className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 p-2 bg-white w-full">
       <DataList
         name="search_member"
         label=""
@@ -58,9 +58,9 @@ export default function AddInTable({ list, getDatas }: IAddInTable) {
         value={value}
         onChange={event => setValue(event.target.value)}
       />
-      <Button bgColor="edit" onClick={getDataInputs}>
+      <Button type="submit" bgColor="edit" onClick={getDataInputs}>
         Adicionar
       </Button>
-    </div>
+    </form>
   )
 }
