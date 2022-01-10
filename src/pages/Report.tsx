@@ -1,7 +1,8 @@
-import { useState, useContext, ChangeEvent } from 'react'
+import { useState, useContext, useEffect, ChangeEvent } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import DataContext from '../context'
+import convertToFloat from '../utils/convertToFloat'
 
 import Layout from '../components/templates/Layout'
 import SectionTitle from '../components/atoms/SectionTitle'
@@ -59,6 +60,7 @@ export default function Report() {
     setEditItemWithValue,
   } = useContext(DataContext)
   const [infos, setInfos] = useState<DataPage>(INITIAL_DATA)
+  const [total, setTotal] = useState('')
 
   const handleGoBack = () => history.replace('/')
 
@@ -70,6 +72,19 @@ export default function Report() {
     console.log('infos', infos)
     console.log('listWithValue', listWithValue)
   }
+
+  useEffect(() => {
+    let totalValue = 0
+    for (const item of listWithValue) {
+      console.log('item da tabela', item)
+      const value = convertToFloat(item[2])
+      totalValue += Number(value)
+    }
+
+    setTotal(
+      totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+    )
+  }, [listWithValue, editItemWithValue])
 
   function getNewItem(data: string[]) {
     if (editItemWithValue.index !== -1) {
@@ -120,6 +135,15 @@ export default function Report() {
             datas={listWithValue}
             memberList={list}
             getDataItem={getNewItem}
+          />
+        </section>
+        <section className="flex flex-row-reverse">
+          <Input
+            label="Valor Total"
+            name="totalValue"
+            type="teste"
+            defaultValue={total}
+            disabled
           />
         </section>
         <section className="flex justify-end space-x-2 mt-4">
