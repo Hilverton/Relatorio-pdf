@@ -4,14 +4,7 @@ import HeaderPage from '../components/molecules/HeaderPage'
 import SectionTitle from '../components/atoms/SectionTitle'
 import Button from '../components/atoms/Button'
 
-const headers = ['Código', 'Nome', 'Ações']
-
-const list = [
-  ['1236563', 'Jóse Carlos'],
-  ['9845986', 'João Vitor'],
-  ['7419845', 'Nicodemos Vitor'],
-  ['7419145', 'Antônio Gilberto'],
-]
+import { memberTableHeaders, memberListTable } from '../utils/mocks'
 
 export default function Members() {
   return (
@@ -23,7 +16,7 @@ export default function Members() {
             <SectionTitle>Lista</SectionTitle>
             <Button bgColor="edit">Adicionar</Button>
           </div>
-          <Table headers={headers} datas={list} />
+          <Table headers={memberTableHeaders} datas={memberListTable} />
         </section>
       </div>
     </Layout>

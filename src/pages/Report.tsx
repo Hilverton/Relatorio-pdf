@@ -12,7 +12,7 @@ import HeaderPage from '../components/molecules/HeaderPage'
 import DataList from '../components/atoms/DataList'
 import TableWithAddition from '../components/organisms/TableWithAddition'
 
-const months = ['Janeiro', 'Fevereiro', 'Março']
+import { monthsOfYear, titheTableHeaders, memberList } from '../utils/mocks'
 
 interface DataPage {
   month: string
@@ -25,31 +25,6 @@ const INITIAL_DATA = {
   starting_day: '',
   final_day: '',
 }
-
-const headers = ['Código', 'Nome', 'Valor', 'Ações']
-
-const list = [
-  {
-    id: 1,
-    code: '1236563',
-    name: 'Jóse Carlos',
-  },
-  {
-    id: 2,
-    code: '9845986',
-    name: 'João Vitor',
-  },
-  {
-    id: 3,
-    code: '7419845',
-    name: 'Nicodemos Vitor',
-  },
-  {
-    id: 4,
-    code: '7419145',
-    name: 'Antônio Gilberto',
-  },
-]
 
 export default function Report() {
   const history = useHistory()
@@ -108,7 +83,7 @@ export default function Report() {
             <DataList
               label="Digite o mês"
               name="month"
-              dataList={months}
+              dataList={monthsOfYear}
               value={infos.month}
               onChange={InfosDoc}
             />
@@ -131,9 +106,9 @@ export default function Report() {
         <section className="flex-col space-y-4">
           <SectionTitle>Informações do documento</SectionTitle>
           <TableWithAddition
-            headers={headers}
+            headers={titheTableHeaders}
             datas={listWithValue}
-            memberList={list}
+            memberList={memberList}
             getDataItem={getNewItem}
           />
         </section>
