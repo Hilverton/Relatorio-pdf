@@ -13,11 +13,11 @@ export default function Modal({ closeModal }: IModal) {
   return (
     <div className="overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 flex justify-center items-center h-modal md:h-full md:inset-0">
       <div className="relative px-4 w-full max-w-md h-full md:h-auto">
-        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div className="relative bg-gray-400 rounded-lg shadow border border-gray-600">
           <div className="flex justify-end p-2">
             <button
               type="button"
-              className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+              className="text-gray-200 bg-transparent hover:bg-gray-700 hover:text-gray-300 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
               onClick={close}
             >
               <svg
@@ -39,7 +39,7 @@ export default function Modal({ closeModal }: IModal) {
             className="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8"
             action="#"
           >
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+            <h3 className="text-xl font-medium text-gray-900">
               Adicionar membro
             </h3>
             <Input name="code" label="Código" type="text" required />
