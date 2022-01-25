@@ -1,9 +1,16 @@
 import { createContext, useState, FC, Dispatch, SetStateAction } from 'react'
+import { memberList as memberListMock } from '../utils/mocks'
 
 interface IEditItemWithValue {
   member: string
   value: string
   index: number
+}
+
+interface IAddMember {
+  id: number
+  code: string
+  name: string
 }
 
 type ContextType = {
@@ -12,7 +19,9 @@ type ContextType = {
   editItemWithValue: IEditItemWithValue
   setEditItemWithValue: Dispatch<SetStateAction<IEditItemWithValue>>
   setListWithValue: Dispatch<SetStateAction<string[][]>>
+  memberList: IAddMember[]
   getItemByCode: (code: string, kind: 'edit' | 'delete') => void
+  setMember: (data: IAddMember) => void
 }
 
 const DataContext = createContext<ContextType>({} as ContextType)
@@ -20,6 +29,7 @@ const DataContext = createContext<ContextType>({} as ContextType)
 export const DataProvider: FC = ({ children }) => {
   const [codeSelected, setCodeSelected] = useState('')
   const [listWithValue, setListWithValue] = useState<string[][]>([])
+  const [memberList, setMemberList] = useState<IAddMember[]>(memberListMock)
   const [editItemWithValue, setEditItemWithValue] =
     useState<IEditItemWithValue>({
       member: '',
@@ -27,12 +37,12 @@ export const DataProvider: FC = ({ children }) => {
       index: -1,
     })
 
-  function getItemByCode(code: string, kind: 'edit' | 'delete') {
-    if (kind === 'delete') {
+  const functions = {
+    delete: (code: string) => {
       const listTemp = listWithValue.filter(list => !list.includes(code))
       setListWithValue(listTemp)
-    }
-    if (kind === 'edit') {
+    },
+    edit: (code: string) => {
       let index = 0
       for (const i in listWithValue) {
         if (listWithValue[i].includes(code)) {
@@ -48,8 +58,15 @@ export const DataProvider: FC = ({ children }) => {
       }
 
       setEditItemWithValue(obj)
-      console.log('edit')
-    }
+    },
+  }
+
+  function getItemByCode(code: string, kind: 'edit' | 'delete') {
+    functions[kind](code)
+  }
+
+  function setMember(newMember: IAddMember) {
+    setMemberList([...memberList, newMember])
   }
 
   return (
@@ -61,6 +78,8 @@ export const DataProvider: FC = ({ children }) => {
         setListWithValue,
         codeSelected,
         getItemByCode,
+        memberList,
+        setMember,
       }}
     >
       {children}
