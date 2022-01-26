@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+
+import DataContext from '../context'
 
 import Layout from '../components/templates/Layout'
 import Table from '../components/organisms/Table'
@@ -7,10 +9,11 @@ import HeaderPage from '../components/molecules/HeaderPage'
 import SectionTitle from '../components/atoms/SectionTitle'
 import Button from '../components/atoms/Button'
 
-import { memberTableHeaders, memberListTable } from '../utils/mocks'
+import { memberTableHeaders } from '../utils/mocks'
 
 export default function Members() {
   const [modal, setModal] = useState(false)
+  const { memberListTable } = useContext(DataContext)
 
   function toggleModal() {
     setModal(!modal)

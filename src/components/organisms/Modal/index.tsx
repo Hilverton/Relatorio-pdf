@@ -1,3 +1,7 @@
+import { useState, useContext, FormEvent } from 'react'
+
+import DataContext from '../../../context'
+
 import Input from '../../atoms/Input'
 import Button from '../../atoms/Button'
 
@@ -6,7 +10,17 @@ interface IModal {
 }
 
 export default function Modal({ closeModal }: IModal) {
+  const [name, setName] = useState('')
+  const [code, setCode] = useState('')
+  const { setMember } = useContext(DataContext)
+
   function close() {
+    closeModal()
+  }
+
+  function submit(event: FormEvent) {
+    event.preventDefault()
+    setMember({ name, code })
     closeModal()
   }
 
@@ -35,16 +49,29 @@ export default function Modal({ closeModal }: IModal) {
             </button>
           </div>
 
-          <form
-            className="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8"
-            action="#"
-          >
+          <form className="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8">
             <h3 className="text-xl font-medium text-gray-900">
               Adicionar membro
             </h3>
-            <Input name="code" label="Código" type="text" required />
-            <Input name="name" label="Nome" type="text" required />
-            <Button bgColor="success">Adicionar</Button>
+            <Input
+              name="code"
+              label="Código"
+              type="text"
+              value={code}
+              onChange={event => setCode(event.target.value)}
+              required
+            />
+            <Input
+              name="name"
+              label="Nome"
+              type="text"
+              value={name}
+              onChange={event => setName(event.target.value)}
+              required
+            />
+            <Button type="submit" bgColor="success" onClick={submit}>
+              Adicionar
+            </Button>
           </form>
         </div>
       </div>
