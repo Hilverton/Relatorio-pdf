@@ -1,4 +1,12 @@
-import { createContext, useState, FC, Dispatch, SetStateAction } from 'react'
+import {
+  createContext,
+  useState,
+  useEffect,
+  FC,
+  Dispatch,
+  SetStateAction,
+} from 'react'
+
 import { memberList as memberListMock } from '../utils/mocks'
 
 interface IEditItemWithValue {
@@ -40,6 +48,10 @@ export const DataProvider: FC = ({ children }) => {
       value: '',
       index: -1,
     })
+
+  useEffect(() => {
+    window.Main.getMembers()
+  }, [])
 
   const functions = {
     delete: (code: string) => {

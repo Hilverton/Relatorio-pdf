@@ -21,6 +21,7 @@ export default function Modal({ closeModal }: IModal) {
   function submit(event: FormEvent) {
     event.preventDefault()
     setMember({ name, code })
+    window.Main.insertMember(name, code)
     closeModal()
   }
 

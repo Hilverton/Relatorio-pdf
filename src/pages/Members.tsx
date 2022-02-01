@@ -17,6 +17,7 @@ export default function Members() {
 
   function toggleModal() {
     setModal(!modal)
+    window.Main.sendMessage('Sucesso main')
   }
 
   return (
