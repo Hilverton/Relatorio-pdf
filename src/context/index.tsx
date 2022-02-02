@@ -7,6 +7,7 @@ import {
   SetStateAction,
 } from 'react'
 
+import { IInsertMember } from '../../electron/database'
 import { memberList as memberListMock } from '../utils/mocks'
 
 interface IEditItemWithValue {
@@ -38,10 +39,8 @@ const DataContext = createContext<ContextType>({} as ContextType)
 export const DataProvider: FC = ({ children }) => {
   const [codeSelected, setCodeSelected] = useState('')
   const [listWithValue, setListWithValue] = useState<string[][]>([])
-  const [memberListTable, setMemberListTable] = useState<string[][]>(
-    transform(memberListMock)
-  )
-  const [memberList, setMemberList] = useState<IAddMember[]>(memberListMock)
+  const [memberListTable, setMemberListTable] = useState<string[][]>([[]])
+  const [memberList, setMemberList] = useState<IAddMember[]>([])
   const [editItemWithValue, setEditItemWithValue] =
     useState<IEditItemWithValue>({
       member: '',
@@ -51,6 +50,15 @@ export const DataProvider: FC = ({ children }) => {
 
   useEffect(() => {
     window.Main.getMembers()
+    window.Main.on('get', (data: IInsertMember[]) => {
+      const members = data.map(member => ({
+        id: member.id,
+        name: member.name,
+        code: member.code,
+      }))
+      setMemberList(members)
+      setMemberListTable(transform(members))
+    })
   }, [])
 
   const functions = {

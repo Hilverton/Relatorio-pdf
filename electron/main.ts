@@ -41,13 +41,15 @@ async function registerListeners() {
     console.log(message)
   })
 
-  ipcMain.on('put', (_, content: IContent) => {
+  ipcMain.on('put', (event, content: IContent) => {
     insertMember(content)
-    getMembers()
+    const members = getMembers()
+    event.reply('get', members)
   })
 
-  ipcMain.on('get', () => {
-    getMembers()
+  ipcMain.on('get', event => {
+    const members = getMembers()
+    event.reply('get', members)
   })
 }
 

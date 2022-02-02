@@ -1,12 +1,13 @@
-import path from 'path'
+// import path from 'path'
 import Loki from 'lokijs'
 
 interface IInsertMember {
+  id: number
   name: string
   code: string
 }
 
-const db = new Loki(path.resolve(__dirname, 'database.db'), {
+const db = new Loki('database.db', {
   autoload: true,
   autoloadCallback: databaseInitialize,
   autosave: true,
@@ -14,13 +15,13 @@ const db = new Loki(path.resolve(__dirname, 'database.db'), {
 })
 
 function databaseInitialize() {
-  let members = db.getCollection('members')
+  let members = db.getCollection<IInsertMember>('members')
   if (members === null) {
-    members = db.addCollection('members')
+    members = db.addCollection<IInsertMember>('members')
   }
 }
 
-function insertMember(member: IInsertMember) {
+function insertMember(member: Omit<IInsertMember, 'id'>) {
   const membersCount = db.getCollection('members').count()
   console.log('number of members in database : ' + membersCount)
   const members = db.getCollection('members')
@@ -28,8 +29,8 @@ function insertMember(member: IInsertMember) {
 }
 
 function getMembers() {
-  const members = db.getCollection('members').data
-  console.log('lista de membros', members)
+  const members = db.getCollection<IInsertMember>('members').data
+  return members
 }
 
-export { insertMember, getMembers }
+export { insertMember, getMembers, IInsertMember }
