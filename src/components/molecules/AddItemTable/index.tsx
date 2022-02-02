@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, FormEvent } from 'react'
 import DataContext from '../../../context'
 
 import DataList from '../../atoms/DataList'
@@ -34,7 +34,8 @@ export default function AddInTable({ list, getDatas }: IAddInTable) {
     setValue(editItemWithValue.value)
   }, [editItemWithValue])
 
-  function getDataInputs() {
+  function getDataInputs(event: FormEvent) {
+    event.preventDefault()
     const data = member.split(' - ')
     data.push(value)
     setMember('')

@@ -12,7 +12,7 @@ import HeaderPage from '../components/molecules/HeaderPage'
 import DataList from '../components/atoms/DataList'
 import TableWithAddition from '../components/organisms/TableWithAddition'
 
-import { monthsOfYear, titheTableHeaders, memberList } from '../utils/mocks'
+import { monthsOfYear, titheTableHeaders } from '../utils/mocks'
 
 interface DataPage {
   month: string
@@ -33,6 +33,7 @@ export default function Report() {
     setListWithValue,
     editItemWithValue,
     setEditItemWithValue,
+    memberList,
   } = useContext(DataContext)
   const [infos, setInfos] = useState<DataPage>(INITIAL_DATA)
   const [total, setTotal] = useState('')
