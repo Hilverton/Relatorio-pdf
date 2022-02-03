@@ -1,5 +1,10 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
-import { insertMember, getMembers } from './database'
+import {
+  insertMember,
+  getMembers,
+  updateMember,
+  deleteMember,
+} from './database'
 
 let mainWindow: BrowserWindow | null
 
@@ -36,6 +41,10 @@ interface IContent {
   code: string
 }
 
+interface IContentMember extends IContent {
+  savedCode: string
+}
+
 async function registerListeners() {
   ipcMain.on('message', (_, message) => {
     console.log(message)
@@ -43,6 +52,18 @@ async function registerListeners() {
 
   ipcMain.on('put', (event, content: IContent) => {
     insertMember(content)
+    const members = getMembers()
+    event.reply('get', members)
+  })
+
+  ipcMain.on('update', (event, contentMember: IContentMember) => {
+    updateMember(contentMember)
+    const members = getMembers()
+    event.reply('get', members)
+  })
+
+  ipcMain.on('delete', (event, code: string) => {
+    deleteMember(code)
     const members = getMembers()
     event.reply('get', members)
   })

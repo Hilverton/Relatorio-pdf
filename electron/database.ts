@@ -1,10 +1,13 @@
-// import path from 'path'
 import Loki from 'lokijs'
 
 interface IInsertMember {
   id: number
   name: string
   code: string
+}
+
+interface IUpdateMember extends Omit<IInsertMember, 'id'> {
+  savedCode: string
 }
 
 const db = new Loki('database.db', {
@@ -23,9 +26,27 @@ function databaseInitialize() {
 
 function insertMember(member: Omit<IInsertMember, 'id'>) {
   const membersCount = db.getCollection('members').count()
-  console.log('number of members in database : ' + membersCount)
   const members = db.getCollection('members')
   members?.insert({ id: membersCount + 1, ...member })
+}
+
+function updateMember(member: IUpdateMember) {
+  const memberDB = db.getCollection<IInsertMember>('members')
+  const memberFound = memberDB.findOne({ code: member.savedCode })
+  if (memberFound !== null) {
+    memberFound.code = member.code
+    memberFound.name = member.name
+    memberDB.update(memberFound)
+  }
+}
+
+function deleteMember(code: string) {
+  const memberDB = db.getCollection<IInsertMember>('members')
+  const memberFound = memberDB.findOne({ code })
+  if (memberFound !== null) {
+    memberDB.remove(memberFound)
+    memberDB.chain().data()
+  }
 }
 
 function getMembers() {
@@ -33,4 +54,4 @@ function getMembers() {
   return members
 }
 
-export { insertMember, getMembers, IInsertMember }
+export { insertMember, getMembers, updateMember, deleteMember, IInsertMember }

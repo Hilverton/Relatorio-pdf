@@ -12,4 +12,5 @@ interface TableDatas {
 
 interface TableDataRow extends TableHeader, TableData {
   idx: number
+  members?: boolean
 }

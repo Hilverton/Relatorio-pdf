@@ -8,12 +8,17 @@ import {
 } from 'react'
 
 import { IInsertMember } from '../../electron/database'
-import { memberList as memberListMock } from '../utils/mocks'
 
 interface IEditItemWithValue {
   member: string
   value: string
   index: number
+}
+
+interface IEditMember {
+  savedCode: string
+  code: string
+  name: string
 }
 
 interface IAddMember {
@@ -27,11 +32,16 @@ type ContextType = {
   listWithValue: string[][]
   editItemWithValue: IEditItemWithValue
   setEditItemWithValue: Dispatch<SetStateAction<IEditItemWithValue>>
+  editMember: IEditMember
+  setEditMember: Dispatch<SetStateAction<IEditMember>>
   setListWithValue: Dispatch<SetStateAction<string[][]>>
   memberList: IAddMember[]
   memberListTable: string[][]
   getItemByCode: (code: string, kind: 'edit' | 'delete') => void
-  setMember: (data: Omit<IAddMember, 'id'>) => void
+  modal: boolean
+  setModal: Dispatch<SetStateAction<boolean>>
+  isEditingMember: boolean
+  setIsEditingMember: Dispatch<SetStateAction<boolean>>
 }
 
 const DataContext = createContext<ContextType>({} as ContextType)
@@ -47,6 +57,13 @@ export const DataProvider: FC = ({ children }) => {
       value: '',
       index: -1,
     })
+  const [editMember, setEditMember] = useState<IEditMember>({
+    name: '',
+    code: '',
+    savedCode: '',
+  })
+  const [modal, setModal] = useState(false)
+  const [isEditingMember, setIsEditingMember] = useState(false)
 
   useEffect(() => {
     window.Main.getMembers()
@@ -83,6 +100,29 @@ export const DataProvider: FC = ({ children }) => {
 
       setEditItemWithValue(obj)
     },
+    edit_member: (code: string) => {
+      let index = 0
+      for (const i in memberListTable) {
+        if (memberListTable[i].includes(code)) {
+          index = Number(i)
+          break
+        }
+      }
+
+      const obj = {
+        code: memberListTable[index][0],
+        name: memberListTable[index][1],
+        savedCode: code,
+      }
+
+      console.log(obj)
+      setEditMember(obj)
+      setIsEditingMember(true)
+      setModal(true)
+    },
+    delete_member: (code: string) => {
+      window.Main.deleteMember(code)
+    },
   }
 
   function transform(list: IAddMember[]) {
@@ -94,21 +134,11 @@ export const DataProvider: FC = ({ children }) => {
     return arrayMemberListTable
   }
 
-  function getItemByCode(code: string, kind: 'edit' | 'delete') {
+  function getItemByCode(
+    code: string,
+    kind: 'edit' | 'delete' | 'edit_member' | 'delete_member'
+  ) {
     functions[kind](code)
-  }
-
-  function setMember(member: Omit<IAddMember, 'id'>) {
-    const newMember = {
-      id: memberList.length + 1,
-      code: member.code,
-      name: member.name,
-    }
-
-    setMemberList([...memberList, newMember])
-
-    const arrayMemberListTable = [member.code, member.name]
-    setMemberListTable([...memberListTable, arrayMemberListTable])
   }
 
   return (
@@ -122,7 +152,12 @@ export const DataProvider: FC = ({ children }) => {
         getItemByCode,
         memberList,
         memberListTable,
-        setMember,
+        modal,
+        setModal,
+        editMember,
+        setEditMember,
+        isEditingMember,
+        setIsEditingMember,
       }}
     >
       {children}

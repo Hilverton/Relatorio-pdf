@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 
 import DataContext from '../context'
 
@@ -12,12 +12,11 @@ import Button from '../components/atoms/Button'
 import { memberTableHeaders } from '../utils/mocks'
 
 export default function Members() {
-  const [modal, setModal] = useState(false)
-  const { memberListTable } = useContext(DataContext)
+  const { memberListTable, modal, setModal, isEditingMember } =
+    useContext(DataContext)
 
   function toggleModal() {
     setModal(!modal)
-    window.Main.sendMessage('Sucesso main')
   }
 
   return (
@@ -31,10 +30,14 @@ export default function Members() {
               Adicionar
             </Button>
           </div>
-          <Table headers={memberTableHeaders} datas={memberListTable} />
+          <Table
+            headers={memberTableHeaders}
+            datas={memberListTable}
+            members={true}
+          />
         </section>
       </div>
-      {modal && <Modal closeModal={toggleModal} />}
+      {modal && <Modal closeModal={toggleModal} isEdit={isEditingMember} />}
     </Layout>
   )
 }

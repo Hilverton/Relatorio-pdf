@@ -1,5 +1,4 @@
-import { useState, useContext, FormEvent } from 'react'
-
+import { useState, useEffect, useContext, FormEvent } from 'react'
 import DataContext from '../../../context'
 
 import Input from '../../atoms/Input'
@@ -7,21 +6,33 @@ import Button from '../../atoms/Button'
 
 interface IModal {
   closeModal: () => void
+  isEdit: boolean
 }
 
-export default function Modal({ closeModal }: IModal) {
+const emptyEditMember = { name: '', code: '', savedCode: '' }
+
+export default function Modal({ closeModal, isEdit }: IModal) {
   const [name, setName] = useState('')
   const [code, setCode] = useState('')
-  const { setMember } = useContext(DataContext)
+  const { editMember, setEditMember } = useContext(DataContext)
 
   function close() {
+    setEditMember(emptyEditMember)
     closeModal()
   }
 
+  useEffect(() => {
+    setName(editMember.name)
+    setCode(editMember.code)
+  }, [editMember])
+
   function submit(event: FormEvent) {
     event.preventDefault()
-    setMember({ name, code })
-    window.Main.insertMember(name, code)
+    if (isEdit) window.Main.updateMember(name, code, editMember.savedCode)
+    else window.Main.insertMember(name, code)
+    setName('')
+    setCode('')
+    setEditMember(emptyEditMember)
     closeModal()
   }
 
@@ -52,7 +63,7 @@ export default function Modal({ closeModal }: IModal) {
 
           <form className="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8">
             <h3 className="text-xl font-medium text-gray-900">
-              Adicionar membro
+              {isEdit ? 'Editar' : 'Adicionar'} membro
             </h3>
             <Input
               name="code"
@@ -71,7 +82,7 @@ export default function Modal({ closeModal }: IModal) {
               required
             />
             <Button type="submit" bgColor="success" onClick={submit}>
-              Adicionar
+              {isEdit ? 'Salvar' : 'Adicionar'}
             </Button>
           </form>
         </div>

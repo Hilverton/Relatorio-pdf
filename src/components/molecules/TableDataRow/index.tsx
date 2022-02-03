@@ -5,7 +5,12 @@ import TableRowHead from '../../atoms/TableRowHead'
 import TableData from '../../atoms/TableData'
 import Button from '../../atoms/Button'
 
-export default function TableDataRow({ headers, datas, idx }: TableDataRow) {
+export default function TableDataRow({
+  headers,
+  datas,
+  idx,
+  members = false,
+}: TableDataRow) {
   const { getItemByCode } = useContext(DataContext)
   return (
     <TableRowHead isEven={idx % 2 === 0}>
@@ -18,13 +23,17 @@ export default function TableDataRow({ headers, datas, idx }: TableDataRow) {
               </span>
               <Button
                 bgColor="edit"
-                onClick={() => getItemByCode(datas[0], 'edit')}
+                onClick={() =>
+                  getItemByCode(datas[0], members ? 'edit_member' : 'edit')
+                }
               >
                 Editar
               </Button>
               <Button
                 bgColor="delete"
-                onClick={() => getItemByCode(datas[0], 'delete')}
+                onClick={() =>
+                  getItemByCode(datas[0], members ? 'delete_member' : 'delete')
+                }
               >
                 Apagar
               </Button>
